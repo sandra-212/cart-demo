@@ -7,11 +7,6 @@ import com.example.demo.entity.Cart
 import com.example.demo.dto.Item
 import com.example.demo.repository.CartRepository
 import org.springframework.stereotype.Service
-import org.springframework.util.ReflectionUtils
-import java.lang.reflect.Field
-import java.util.stream.Collectors
-import kotlin.reflect.full.memberProperties
-
 
 @Service
 class CartService (private val repository: CartRepository) {
@@ -36,8 +31,8 @@ class CartService (private val repository: CartRepository) {
 
         }
 
-        val cart1:Cart = toEntity(Cart(cart.id,cart.userId, items))
-        val update= repository.save(cart1)
+        val cartEntity:Cart = toEntity(Cart(cart.id,cart.userId, items))
+        val update= repository.save(cartEntity)
         return toCartDto(update)
     }
 
@@ -52,8 +47,8 @@ class CartService (private val repository: CartRepository) {
         val items = cart.getProducts()
         val cartItem = items.find { it.id == id} ?: throw NoSuchElementException("Item Not Found!")
         items.remove(cartItem)
-        val cart1:Cart = toEntity(Cart(cart.id,cart.userId, items))
-        val update= repository.save(cart1)
+        val cartEntity:Cart = toEntity(Cart(cart.id,cart.userId, items))
+        val update= repository.save(cartEntity)
         return toCartDto(update)
     }
 }
